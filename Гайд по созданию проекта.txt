@@ -1,0 +1,134 @@
+1) Создание виртуального окружения
+
+*Директория*>python -m venv django_env
+
+C:\Users\igor.koryagin\Documents\YandexDisk\Документы\Study\Python\Django>python -m venv django_env
+
+2) Активация виртуального окружения
+
+*Название виртуального окружения*\django_env\Scripts\activate
+
+Пример: C:\Users\igor.koryagin\Documents\YandexDisk\Документы\Study\Python\Django\django_env\Scripts\activate
+
+3) Обновление pip перед установкой Django
+
+python -m pip install --upgrade pip
+
+4) Установка Django в виртуальную среду используя файл requirements.
+
+Содержимое файла requirements.txt:
+	django~=2.2.6
+
+<в виртуальном окружении>*Каталог проекта*pip install -r requirements.txt
+
+Пример: (django_env) C:\Users\igor.koryagin\Documents\YandexDisk\Документы\Study\Python\Django>pip install -r requirements.txt
+
+5) Создание нового проекта на Django
+
+django-admin.exe startproject mysite .
+
+Пример: (django_env) C:\Users\igor.koryagin\Documents\YandexDisk\Документы\Study\Python\Django>django-admin.exe startproject mysite .
+
+6) Изменение настроек сайта в settings.py
+
+- Определение часовой зоны TIME_ZONE = 'Europe/Moscow'
+- Определение языка LANGUAGE_CODE = 'ru-ru'
+- Определение пути к статическим файлам, добавление в конец строки STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
+- Определение разрешенные хостов (При Debug = TRUE) ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
+
+7) Проверка настроек базы данных
+По-умолчанию: 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+8) Создание базы данных для сайта
+
+python manage.py migrate
+
+Пример: (django_env) C:\Users\igor.koryagin\Documents\YandexDisk\Документы\Study\Python\Django>python manage.py migrate
+
+9) Запуск веб-сервера
+
+python manage.py runserver
+
+Проверка работоспособности по адресу: http://127.0.0.1:8000/
+
+10) Создание приложения
+
+python manage.py startapp blog
+
+Пример: (django_env) C:\Users\igor.koryagin\Documents\YandexDisk\Документы\Study\Python\Django>python manage.py startapp blog
+
+11) Добавление приложения в список установленных (mysite/settings.py)
+
+В конец списка добавить название приложения, например "blog"
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'blog'
+]
+
+12) Создание модели записи (в блоге)
+
+В директории приложения отредактировать models.py
+
+13) Создание таблиц моделей в базе данных
+
+Информирование django о наличии изменений в модели:
+python manage.py makemigrations blog
+
+Пример: (django_env) C:\Users\igor.koryagin\Documents\YandexDisk\Документы\Study\Python\Django\python manage.py makemigrations blog
+
+*Файл с миграцией для базы данных создан*
+
+Применение миграций:
+python manage.py migrate blog
+
+Пример: (django_env) C:\Users\igor.koryagin\Documents\YandexDisk\Документы\Study\Python\Django\python manage.py migrate blog
+
+14) Администрирование Django (blog/admin.py) - Импорт и регистрация созданной модели
+
+В blog/admin.py:
+from django.contrib import admin
+from .models import Post
+
+admin.site.register(Post)
+
+15) Создание суперпользователя для администрирования
+
+(django_env) C:\Users\igor.koryagin\Documents\YandexDisk\Документы\Study\Python\Django>python manage.py createsuperuser
+
+===========================================================
+Установка Git и создание репозитория
+
+После установки git необходимо инициализировать git-репозиторий внутри директории сайта
+cd C:\Users\igor.koryagin\Documents\YandexDisk\Документы\Study\Python\Django
+git init
+
+git config --global user.name "Your Name"
+git config --global user.email you@example.com
+
+Определение игнорируемых файлов, создание файла .gitignore
+
+В корневом каталоге проекта создать файл .gitignore (в Windows название будет ".gitignore.")
+Содержимое файла .gitignore:
+*.pyc
+*~
+__pycache__
+django_env
+db.sqlite3
+/static
+.DS_Store
+
+===========================================================
+
+
